@@ -1,0 +1,600 @@
+// Variables
+$primary-color: var(--setting-primary-theme);
+$secondary-color: rgb(11, 205, 131);
+$tertiary-color: #ccddff;
+
+
+@mixin root-prop($prop: null, $value: null) {
+  @if ($prop and $value) {
+    #{$prop}: $value;
+  }
+}
+
+:root {
+  @include root-prop(--setting-primary-theme, #005fff);
+}
+
+* {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+  }
+
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+// Shared styles
+button {
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+input {
+  color: $primary-color;
+  font-size: 17px;
+  padding-left: 20px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $primary-color;
+  }
+}
+
+// Component styles
+.sfs-chatbot-toggler {
+  position: fixed;
+  bottom: 30px;
+  right: 35px;
+  outline: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  @include flex-center;
+  border-radius: 50%;
+  background: $secondary-color;
+  background: linear-gradient( 90deg, $secondary-color 0%, $primary-color 100%, rgba(121, 240, 228, 1) 100% );
+  transition: all 0.2s ease;
+  z-index: 1090;
+
+  span {
+    color: #fff;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  &.sfs-show-chatbot {
+    span:first-child {
+      opacity: 0;
+    }
+
+    span:last-child {
+      opacity: 1;
+    }
+  }
+}
+
+.sfs-header-title {
+  display: flex;
+  padding-left: 10px;
+  align-items: center;
+}
+
+.sfs-chatbot {
+  position: fixed;
+  right: 35px;
+  bottom: 90px;
+  width: 340px;
+  height: 530px;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  transform-origin: bottom right;
+  box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease;
+  z-index: 1090;
+
+  &.sfs-show-chatbot {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+
+  .sfs-header {
+    height: 50px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    background: $primary-color;
+    display: flex;
+    align-items: center;
+
+    p {
+      padding-top: 3px;
+    }
+  }
+
+  .sfs-chatbox {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 10px;
+    margin: 0;
+
+    .sfs-chat {
+      display: flex;
+      list-style: none;
+      font-size: 14px;
+
+      p {
+        padding: 2px 2px 0;
+        margin: 0;
+        width: 100%;
+        font-size: 11px;
+      }
+    }
+
+    .sfs-reply,
+    .sfs-predefined {
+      margin: 0 10px;
+      justify-content: flex-end;
+    }
+
+    .sfs-bot {
+      position: relative;
+
+      .sfs-bot-mark {
+        width: 20px;
+        height: 20px;
+        color: #fff;
+        background: $primary-color;
+        border-radius: 50%;
+        margin: 0 5px 7px 0;
+        top: 5px;
+        left: 7px;
+        position: relative;
+        font-size: 16px;
+        @include flex-center;
+      }
+    }
+
+    .sfs-predefined p {
+      color: $primary-color !important;
+      background: $tertiary-color;
+      border-radius: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: #fff !important;
+        background: $primary-color;
+      }
+    }
+
+    .sfs-reply span {
+      margin: 0 5px 0 0;
+      bottom: 14px;
+      position: relative;
+    }
+
+    .sfs-reply {
+      .sfs-reply-content {
+        border-radius: 10px;
+        background: $primary-color;
+      }
+
+      p {
+        word-break: break-word;
+        color: #fff;
+        padding: 2px 2px 0;
+      }
+    }
+
+    .sfs-bot {
+      position: relative;
+
+      .sfs-bot-message-content {
+        border-radius: 10px;
+        word-break: break-word;
+        color: #000;
+        background: #f2f2f2;
+        padding: 10px;
+        line-height: 15px;
+        margin: 8px 32px 15px 15px;
+      }
+
+      .sfs-system-message {
+        padding: 2px 2px 0 2px;
+        margin: 0;
+        width: 100%
+      }
+
+      .sfs-system-hyperlinks {
+        color: $primary-color;
+        padding: 7px;
+        text-decoration: none;
+        font-size: 12px;
+        border-radius: 15px;
+        border: 1px solid #ffffff;
+        background: #fff;
+        display: block;
+        margin: 4px 2px 4px 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+
+        &:hover {
+          border: 1px solid $primary-color;
+        }
+      }
+    }
+  }
+
+  .sfs-icon {
+    font-size: 14px;
+    line-height: 1 !important;
+  }
+
+  .sfs-bot-question {
+    position: relative;
+
+    .sfs-bot-mark {
+      position: absolute;
+      top: -11px;
+      left: 7px;
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+      color: #ffffff;
+      background: $primary-color;
+      @include flex-center;
+    }
+  }
+
+  .sfs-chat-input {
+    position: absolute;
+    gap: 10px;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    height: 50px;
+    @include flex-center;
+
+    textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: none;
+      padding: 5px 14px 0 14px;
+      font-size: 14px;
+      overflow: auto;
+
+      &:disabled {
+        background: #ffffff;
+      }
+    }
+
+    span {
+      color: $primary-color;
+      cursor: pointer;
+    }
+
+    .sfs-send-btn {
+      margin: 10px 20px 10px 10px;
+    }
+  }
+
+  .sfs-notify-section {
+    position: absolute;
+    bottom: 20px;
+    z-index: 20;
+    background: #fff;
+    height: 64px;
+    @include flex-center;
+    width: 100%;
+    background: none;
+  }
+
+  .sfs-wrapper {
+    width: calc(100% - 20px);
+    max-width: 100%;
+    position: relative;
+    border-radius: 8px;
+    background: $tertiary-color;
+    margin: 0 -6px;
+    padding: 12px 0px;
+    box-shadow: -10px 13px 17px -7px rgb(174, 180, 191);
+    height: 60px;
+
+    input {
+      background: #ffffff;
+      border: 2px solid $primary-color;
+      border-radius: 50px;
+      padding: 4px 25px;
+      width: calc(100% - 70px);
+      font-size: 14px;
+      margin-top: 1px;
+      margin-left: 10px
+    }
+
+    .sfs-send-mail-btn {
+      background: $primary-color;
+      color: #ffffff;
+      border-radius: 50%;
+      height: 21px;
+      width: 21px;
+      position: absolute;
+      top: 35px;
+      right: 11px;
+    }
+
+    .sfs-inp-label {
+      font-size: 13px;
+      margin-left: 15px;
+      color: $primary-color;
+    }
+  }
+}
+
+.sfs-font-md {
+  font-size: 15px;
+}
+
+.sfs-email-icon {
+  position: absolute;
+  right: 4px;
+  top: 1px;
+}
+
+.sfs-margin-end-2 {
+  margin-right: 8px;
+}
+
+.sfs-margin-top-1 {
+  margin-top: 4px;
+}
+
+.sfs-margin-top-3 {
+  margin-top: 18px;
+}
+
+.sfs-margin-bottom-2 {
+  margin-bottom: 6px;
+}
+
+.sfs-d-none {
+  display: none !important;
+}
+
+.sfs-slideup {
+  animation-name: slideUp;
+  animation-delay: 1s;
+  animation: ease-in;
+}
+
+.sfs-close-email-btn {
+  color: #fff;
+  background: $primary-color;
+  border-radius: 20px;
+  position: absolute;
+  top: -9px;
+  font-size: 13px;
+  right: -5px;
+  height: 19px;
+  width: 19px;
+  @include flex-center;
+}
+
+.sfs-close-chat {
+  display: none;
+}
+
+.sfs-visibility-hidden {
+  visibility: hidden;
+}
+
+.sfs-profile-image {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  margin-right: 8px;
+}
+
+.sfs-status-indicator {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  height: 9px;
+  width: 9px;
+  border-radius: 10px;
+  background: #4dd965;
+}
+
+.sfs-profile-name {
+  margin:0;
+  align-self:center;
+  color: #fff;
+}
+
+.sfs-message-container {
+  max-height: 80%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 25px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 25px;
+  }
+}
+
+.sfs-system-input-container {
+  border-radius: 10px;
+  word-break: break-word;
+  color: #000;
+  background: #f2f2f2;
+  padding: 0;
+  margin: 12px 0 0 15px;
+  width: 82%;
+  position: relative;
+
+  .sfs-input-msg {
+    font-size: 10px;
+    position: absolute;
+    left: 20px;
+    float: left;
+    bottom: 5px;
+    color: #d76565;
+  }
+}
+
+.sfs-system-input-msg {
+  margin: 0;
+  padding: 10px;
+  word-break: break-word;
+}
+
+.sfs-system-input-field {
+  width: 200px;
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid $primary-color;
+  outline: none;
+  margin: 0 0 0 17px;
+  font-size: 12px;
+  padding: 0;
+  color: #000;
+  background: #fff;
+}
+
+.sfs-system-input-btn {
+  color: #fff;
+  font-size: 13px;
+  background: $primary-color;
+  border-radius: 0px 6px 6px 0px;
+  padding-top:4px;
+}
+
+.sfs-sytem-question {
+  margin-bottom: 20px;
+  display: inline-flex;
+  height: 23px;
+}
+
+/*loader styles*/
+.sfs-loading {
+  @include flex-center;
+  background: #f2f2f2;
+  padding: 8px;
+  border-radius: 7px;
+  margin-top: 23px;
+}
+
+.sfs-loading-dot {
+  animation: sfsdot ease-in-out 1s infinite;
+  background-color: $primary-color;
+  display: inline-block;
+  height: 5px;
+  margin: 2px;
+  width: 5px;
+  border-radius: 15px;
+}
+
+
+.sfs-loading-dot:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+
+.sfs-loading-dot:nth-of-type(3) {
+  animation-delay: 0.4s;
+}
+
+.sfs-padding-10 {
+  padding: 10px;
+}
+
+.sfs-font-sm {
+    font-size:11px;
+}
+
+@keyframes sfsdot {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+@media (max-width: 640px) {
+  .sfs-chatbot-toggler {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .sfs-chatbot {
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    border-radius: 0;
+    width: 100%;
+
+    .sfs-chatbox {
+      height: 80%;
+      padding: 25px 15px 100px;
+    }
+
+    .sfs-chat-input {
+      padding: 5px 15px;
+    }
+
+    .sfs-close-chat {
+      display: block !important;
+      position: absolute;
+      top: 9px;
+      right: 4px;
+      color: #fff;
+      background: none;
+      font-size: 22px;
+      float: right;
+    }
+  }
+  .sfs-send-btn {
+    margin: 10px 30px 10px 10px;
+  }
+}
